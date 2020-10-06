@@ -43,26 +43,31 @@ const App: FC = (props) => {
   };
 
   const TweetBox: FC<TweetBoxProps> = (props) => {
-    console.log(props.tweet);
+    const tweetWord = props.tweet.text.split(' ');
+
+    let wordShow = [];
+    for (let i = 0; i < 15; i++) {
+      if (i == tweetWord.length - 1) break;
+      wordShow += tweetWord[i] + ' ';
+    }
+    console.log(wordShow);
+    const videoPath = 'https://r-t-generator.herokuapp.com/';
     return (
       <div>
         <Accordion defaultActiveKey="0">
           <Card>
             <Accordion.Toggle as={Button} variant="link" eventKey="0">
-              Tweet here
+              {wordShow}
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="0">
-              <Card.Body>Hi</Card.Body>
-            </Accordion.Collapse>
-          </Card>
-          <Card>
-            <Card.Header>
-              <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                Video Address here
-              </Accordion.Toggle>
-            </Card.Header>
-            <Accordion.Collapse eventKey="1">
-              <Card.Body>Hello! I am another body</Card.Body>
+              <Card.Body>
+                <div>{props.tweet.text}</div>
+                <div>
+                  <video width="300" height="200" src={videoPath + props.tweet.videoPath} controls>
+                    Video not supported
+                  </video>
+                </div>
+              </Card.Body>
             </Accordion.Collapse>
           </Card>
         </Accordion>
