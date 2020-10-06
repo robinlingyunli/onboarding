@@ -11,8 +11,13 @@ interface TweetContainerProps {
   tweets: Tweet[];
 }
 
+interface TweetBoxProps {
+  tweet: Tweet;
+}
+
 const App: FC = (props) => {
-  const [tweets, setTweets] = useState<Tweet[]>();
+  const init = [];
+  const [tweets, setTweets] = useState<Tweet[]>(init);
   useEffect((): void => {
     (async () => {
       let fetchedTweets: Tweet[];
@@ -30,14 +35,14 @@ const App: FC = (props) => {
     let i = -1;
     return (
       <div>
-        {props.tweetList.map((tweet: Tweet) => {
+        {props.tweets.map((tweet: Tweet) => {
           return <TweetBox key={(i += 1)} tweet={tweet} />;
         })}
       </div>
     );
   };
 
-  const TweetBox: FC = (props) => {
+  const TweetBox: FC<TweetBoxProps> = (props) => {
     console.log(props.tweet);
     return (
       <div>
@@ -64,7 +69,7 @@ const App: FC = (props) => {
       </div>
     );
   };
-  return <TweetContainer tweetList={tweets} />;
+  return <TweetContainer tweets={tweets} />;
 };
 
 export default App;
